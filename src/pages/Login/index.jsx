@@ -1,16 +1,31 @@
 import { useState } from 'react'; 
 import styles from './login.module.css'
+import { useDispatch } from 'react-redux';
+import { createUser } from '../../redux/user/slice';
 
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 export function Login() {
+  const dispatch= useDispatch();
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
 
+  const navigate=useNavigate();
+
   function handleLogin(e){
     e.preventDefault()
+
+    if (name === "" || email ==="" ){
+      alert("DIGITE OS DADOS DO USUARIO")
+      return;
+    }
     
-    console.log(name, email)
+   dispatch(createUser({
+    name:name,
+    email:email,
+   }))
+
+   navigate("/painel")
   }
 
   return (

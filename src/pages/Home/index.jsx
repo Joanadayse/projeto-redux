@@ -6,17 +6,17 @@ import { useSelector } from 'react-redux'
 
 export function Home() {
 
-  const user = useSelector((state)=>state.user)
+  const user = useSelector((state) => state.user.user)
 
-  console.log(user)
 
-  function handleDeleteAddress(){
+
+  function handleDeleteAddress() {
     alert("Endereço deletado com sucesso!")
   }
 
   return (
     <>
-    <Header/>
+      <Header />
       <div className={styles.container}>
         <nav className={styles.nav}>
           <Link to="/" className={styles.link}>
@@ -33,18 +33,23 @@ export function Home() {
         <main className={styles.content}>
           <div className={styles.message}>
             <h1 className={styles.title}>
-              Olá Visitante, bem vindo!
+              Olá {user ? user.name : "Visitante"}, bem vindo!
             </h1>
 
-            <span>Email: ....</span>
+            {user && (
+              <span>Email: {user.email}</span>
+            )}
 
 
-            <strong className={styles.addressLabel}>Endereço atual:</strong>
-            <div className={styles.address}>
-              <p>Rua centro, n 123</p>
-              
-              <button onClick={handleDeleteAddress}>Deletar endereço</button>
-            </div>
+           {user && user.address && (
+            <>
+                <strong className={styles.addressLabel}>Endereço atual:</strong>
+                <div className={styles.address}>
+                  <p>{user.address.location}, n {user.address.number}</p>
+
+                  <button onClick={handleDeleteAddress}>Deletar endereço</button>
+                </div></>
+           )}
 
           </div>
 
